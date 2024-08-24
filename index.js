@@ -30,6 +30,7 @@ async function run() {
 
     const spicyDB= client.db("spicyDB")
     const menuCollection = spicyDB.collection("menuCollection")
+    const addToCartCollection = spicyDB.collection("addToCartCollection")
 
     try{
         app.get('/menus',async(req,res)=>{
@@ -39,6 +40,28 @@ async function run() {
     }catch(err){
         console.log(err)
     }
+
+    // post addto cart
+    try{
+    app.post('/addToCart',async(req,res)=>{
+      const item = req.body;
+      const result = await addToCartCollection.insertOne(item)
+      res.send(result)
+    })
+    }catch(err){
+      console.log(err)
+    }
+
+    // get cart item
+    try{
+       app.get('/getCart',async(req,res)=>{
+          const result = await addToCartCollection.find().toArray()
+          res.send(result)
+       })
+    }catch(err){
+      console.log(err)
+    }
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
