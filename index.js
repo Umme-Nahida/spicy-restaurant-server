@@ -32,7 +32,7 @@ async function run() {
     const menuCollection = spicyDB.collection("menuCollection")
 
     try{
-        app.get('/menu',async(req,res)=>{
+        app.get('/menus',async(req,res)=>{
             const result = await menuCollection.find().toArray()
             res.send(result)
         })
